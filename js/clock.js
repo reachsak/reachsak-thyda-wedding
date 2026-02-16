@@ -1,12 +1,11 @@
 $(document).ready(function () {
   let clock;
 
-  let currentDate = new Date();
-
   // Wedding date
   let targetDate = moment.tz("2026-06-19 00:00", "Asia/Phnom_Penh");
 
-  let diff = targetDate / 1000 - currentDate.getTime() / 1000;
+  // Difference in seconds
+  let diff = targetDate.unix() - moment().unix();
 
   if (diff <= 0) {
     clock = $(".clock").FlipClock(0, {
@@ -25,13 +24,5 @@ $(document).ready(function () {
         },
       },
     });
-
-    setTimeout(checktime, 1000);
-
-    function checktime() {
-      let t = clock.getTime();
-      if (t <= 0) clock.setTime(0);
-      setTimeout(checktime, 1000);
-    }
   }
 });
