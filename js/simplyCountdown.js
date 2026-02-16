@@ -1,285 +1,302 @@
 /*!
- * Project : simply-countdown
- * File : simplyCountdown
- * Date : 27/06/2015
+ * Project : simply-countdown (customized for Reachsak & Thyda)
+ * Auto countdown target: 2026-06-19 00:00 (local time)
  * License : MIT
- * Version : 1.3.2
- * Author : Vincent Loy <vincent.loy1@gmail.com>
- * Contributors : 
- *  - Justin Beasley <JustinB@harvest.org>
- *  - Nathan Smith <NathanS@harvest.org>
  */
+
 /*global window, document*/
 (function (exports) {
-    'use strict';
+  "use strict";
 
-    var // functions
-        extend,
-        createElements,
-        createCountdownElt,
-        simplyCountdown;
+  var extend, createElements, createCountdownElt, simplyCountdown;
 
-    /**
-     * Function that merge user parameters with defaults one.
-     * @param out
-     * @returns {*|{}}
-     */
-    extend = function (out) {
-        var i,
-            obj,
-            key;
-        out = out || {};
-
-        for (i = 1; i < arguments.length; i += 1) {
-            obj = arguments[i];
-
-            if (obj) {
-                for (key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        if (typeof obj[key] === 'object') {
-                            extend(out[key], obj[key]);
-                        } else {
-                            out[key] = obj[key];
-                        }
-                    }
-                }
+  extend = function (out) {
+    var i, obj, key;
+    out = out || {};
+    for (i = 1; i < arguments.length; i += 1) {
+      obj = arguments[i];
+      if (obj) {
+        for (key in obj) {
+          if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            if (
+              typeof obj[key] === "object" &&
+              obj[key] !== null &&
+              !Array.isArray(obj[key])
+            ) {
+              out[key] = out[key] || {};
+              extend(out[key], obj[key]);
+            } else {
+              out[key] = obj[key];
             }
+          }
         }
+      }
+    }
+    return out;
+  };
 
-        return out;
+  createCountdownElt = function (countdown, parameters, typeClass) {
+    var innerSectionTag, sectionTag, amountTag, wordTag;
+
+    sectionTag = document.createElement("div");
+    amountTag = document.createElement("span");
+    wordTag = document.createElement("span");
+    innerSectionTag = document.createElement("div");
+
+    innerSectionTag.appendChild(amountTag);
+    innerSectionTag.appendChild(wordTag);
+    sectionTag.appendChild(innerSectionTag);
+
+    sectionTag.classList.add(parameters.sectionClass);
+    sectionTag.classList.add(typeClass);
+    amountTag.classList.add(parameters.amountClass);
+    wordTag.classList.add(parameters.wordClass);
+
+    countdown.appendChild(sectionTag);
+
+    return {
+      full: sectionTag,
+      amount: amountTag,
+      word: wordTag,
     };
+  };
 
-    /**
-     * Function that create a countdown section
-     * @param countdown
-     * @param parameters
-     * @param typeClass
-     * @returns {{full: (*|Element), amount: (*|Element), word: (*|Element)}}
-     */
-    createCountdownElt = function (countdown, parameters, typeClass) {
-        var innerSectionTag,
-            sectionTag,
-            amountTag,
-            wordTag;
+  createElements = function (parameters, countdown) {
+    if (!parameters.inline) {
+      return {
+        days: createCountdownElt(countdown, parameters, "simply-days-section"),
+        hours: createCountdownElt(
+          countdown,
+          parameters,
+          "simply-hours-section",
+        ),
+        minutes: createCountdownElt(
+          countdown,
+          parameters,
+          "simply-minutes-section",
+        ),
+        seconds: createCountdownElt(
+          countdown,
+          parameters,
+          "simply-seconds-section",
+        ),
+      };
+    }
+    var spanTag = document.createElement("span");
+    spanTag.classList.add(parameters.inlineClass);
+    return spanTag;
+  };
 
-        sectionTag = document.createElement('div');
-        amountTag = document.createElement('span');
-        wordTag = document.createElement('span');
-        innerSectionTag = document.createElement('div');
+  simplyCountdown = function (elt, args) {
+    var parameters = extend(
+      {
+        // defaults (can be overridden by args)
+        year: 2026,
+        month: 6,
+        day: 19,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+        words: {
+          days: "day",
+          hours: "hour",
+          minutes: "minute",
+          seconds: "second",
+          pluralLetter: "s",
+        },
+        plural: true,
+        inline: false,
 
-        innerSectionTag.appendChild(amountTag);
-        innerSectionTag.appendChild(wordTag);
-        sectionTag.appendChild(innerSectionTag);
+        // IMPORTANT: use local time by default (better for wedding sites)
+        enableUtc: false,
 
-        sectionTag.classList.add(parameters.sectionClass);
-        sectionTag.classList.add(typeClass);
-        amountTag.classList.add(parameters.amountClass);
-        wordTag.classList.add(parameters.wordClass);
+        onEnd: function () {
+          return;
+        },
+        refresh: 1000,
+        inlineClass: "simply-countdown-inline",
+        sectionClass: "simply-section",
+        amountClass: "simply-amount",
+        wordClass: "simply-word",
+        zeroPad: true,
+      },
+      args,
+    );
 
-        countdown.appendChild(sectionTag);
+    var cd = document.querySelectorAll(elt);
+    if (!cd || cd.length === 0) return;
 
-        return {
-            full: sectionTag,
-            amount: amountTag,
-            word: wordTag
-        };
-    };
+    var targetTmpDate = new Date(
+      parameters.year,
+      parameters.month - 1,
+      parameters.day,
+      parameters.hours,
+      parameters.minutes,
+      parameters.seconds,
+    );
 
-    /**
-     * Function that create full countdown DOM elements calling createCountdownElt
-     * @param parameters
-     * @param countdown
-     * @returns {{days: (*|Element), hours: (*|Element), minutes: (*|Element), seconds: (*|Element)}}
-     */
-    createElements = function (parameters, countdown) {
-        var spanTag;
+    var targetDate;
+    if (parameters.enableUtc) {
+      targetDate = new Date(
+        targetTmpDate.getUTCFullYear(),
+        targetTmpDate.getUTCMonth(),
+        targetTmpDate.getUTCDate(),
+        targetTmpDate.getUTCHours(),
+        targetTmpDate.getUTCMinutes(),
+        targetTmpDate.getUTCSeconds(),
+      );
+    } else {
+      targetDate = targetTmpDate;
+    }
 
-        if (!parameters.inline) {
-            return {
-                days: createCountdownElt(countdown, parameters, 'simply-days-section'),
-                hours: createCountdownElt(countdown, parameters, 'simply-hours-section'),
-                minutes: createCountdownElt(countdown, parameters, 'simply-minutes-section'),
-                seconds: createCountdownElt(countdown, parameters, 'simply-seconds-section')
-            };
-        }
+    Array.prototype.forEach.call(cd, function (countdown) {
+      var fullCountDown = createElements(parameters, countdown);
+      var interval;
 
-        spanTag = document.createElement('span');
-        spanTag.classList.add(parameters.inlineClass);
-        return spanTag;
-    };
-
-    /**
-     * simplyCountdown, create and display the coundtown.
-     * @param elt
-     * @param args (parameters)
-     */
-    simplyCountdown = function (elt, args) {
-        var parameters = extend({
-                year: 2015,
-                month: 6,
-                day: 28,
-                hours: 0,
-                minutes: 0,
-                seconds: 0,
-                words: {
-                    days: 'day',
-                    hours: 'hour',
-                    minutes: 'minute',
-                    seconds: 'second',
-                    pluralLetter: 's'
-                },
-                plural: true,
-                inline: false,
-                enableUtc: true,
-                onEnd: function () {
-                    return;
-                },
-                refresh: 1000,
-                inlineClass: 'simply-countdown-inline',
-                sectionClass: 'simply-section',
-                amountClass: 'simply-amount',
-                wordClass: 'simply-word',
-                zeroPad: false
-            }, args),
-            interval,
-            targetDate,
-            targetTmpDate,
-            now,
-            nowUtc,
-            secondsLeft,
-            days,
-            hours,
-            minutes,
-            seconds,
-            cd = document.querySelectorAll(elt);
-
-        targetTmpDate = new Date(
-            parameters.year,
-            parameters.month - 1,
-            parameters.day,
-            parameters.hours,
-            parameters.minutes,
-            parameters.seconds
-        );
+      var refresh = function () {
+        var now = new Date();
+        var secondsLeft;
 
         if (parameters.enableUtc) {
-            targetDate = new Date(
-                targetTmpDate.getUTCFullYear(),
-                targetTmpDate.getUTCMonth(),
-                targetTmpDate.getUTCDate(),
-                targetTmpDate.getUTCHours(),
-                targetTmpDate.getUTCMinutes(),
-                targetTmpDate.getUTCSeconds()
-            );
+          // Build a "UTC-like" now date
+          var nowUtc = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+            now.getHours(),
+            now.getMinutes(),
+            now.getSeconds(),
+          );
+          secondsLeft = (targetDate.getTime() - nowUtc.getTime()) / 1000;
         } else {
-            targetDate = targetTmpDate;
+          secondsLeft = (targetDate.getTime() - now.getTime()) / 1000;
         }
 
-        Array.prototype.forEach.call(cd, function (countdown) {
-            var fullCountDown = createElements(parameters, countdown),
-                refresh;
+        var days = 0,
+          hours = 0,
+          minutes = 0,
+          seconds = 0;
 
-            refresh = function () {
-                var dayWord,
-                    hourWord,
-                    minuteWord,
-                    secondWord;
+        if (secondsLeft > 0) {
+          days = parseInt(secondsLeft / 86400, 10);
+          secondsLeft = secondsLeft % 86400;
 
-                now = new Date();
-                if (parameters.enableUtc) {
-                    nowUtc = new Date(now.getFullYear(), now.getMonth(), now.getDate(),
-                        now.getHours(), now.getMinutes(), now.getSeconds());
-                    secondsLeft = (targetDate - nowUtc.getTime()) / 1000;
+          hours = parseInt(secondsLeft / 3600, 10);
+          secondsLeft = secondsLeft % 3600;
 
-                } else {
-                    secondsLeft = (targetDate - now.getTime()) / 1000;
-                }
+          minutes = parseInt(secondsLeft / 60, 10);
+          seconds = parseInt(secondsLeft % 60, 10);
+        } else {
+          window.clearInterval(interval);
+          parameters.onEnd();
+        }
 
-                if (secondsLeft > 0) {
-                    days = parseInt(secondsLeft / 86400, 10);
-                    secondsLeft = secondsLeft % 86400;
+        var dayWord, hourWord, minuteWord, secondWord;
 
-                    hours = parseInt(secondsLeft / 3600, 10);
-                    secondsLeft = secondsLeft % 3600;
+        if (parameters.plural) {
+          dayWord =
+            days === 1
+              ? parameters.words.days
+              : parameters.words.days + parameters.words.pluralLetter;
+          hourWord =
+            hours === 1
+              ? parameters.words.hours
+              : parameters.words.hours + parameters.words.pluralLetter;
+          minuteWord =
+            minutes === 1
+              ? parameters.words.minutes
+              : parameters.words.minutes + parameters.words.pluralLetter;
+          secondWord =
+            seconds === 1
+              ? parameters.words.seconds
+              : parameters.words.seconds + parameters.words.pluralLetter;
+        } else {
+          dayWord = parameters.words.days;
+          hourWord = parameters.words.hours;
+          minuteWord = parameters.words.minutes;
+          secondWord = parameters.words.seconds;
+        }
 
-                    minutes = parseInt(secondsLeft / 60, 10);
-                    seconds = parseInt(secondsLeft % 60, 10);
-                } else {
-                    days = 0;
-                    hours = 0;
-                    minutes = 0;
-                    seconds = 0;
-                    window.clearInterval(interval);
-                    parameters.onEnd();
-                }
+        if (parameters.inline) {
+          countdown.innerHTML =
+            days +
+            " " +
+            dayWord +
+            ", " +
+            hours +
+            " " +
+            hourWord +
+            ", " +
+            minutes +
+            " " +
+            minuteWord +
+            ", " +
+            seconds +
+            " " +
+            secondWord +
+            ".";
+          return;
+        }
 
-                if (parameters.plural) {
-                    dayWord = days > 1
-                        ? parameters.words.days + parameters.words.pluralLetter
-                        : parameters.words.days;
+        var pad = function (n) {
+          var s = String(n);
+          return parameters.zeroPad && s.length < 2 ? "0" + s : s;
+        };
 
-                    hourWord = hours > 1
-                        ? parameters.words.hours + parameters.words.pluralLetter
-                        : parameters.words.hours;
+        fullCountDown.days.amount.textContent = pad(days);
+        fullCountDown.days.word.textContent = dayWord;
 
-                    minuteWord = minutes > 1
-                        ? parameters.words.minutes + parameters.words.pluralLetter
-                        : parameters.words.minutes;
+        fullCountDown.hours.amount.textContent = pad(hours);
+        fullCountDown.hours.word.textContent = hourWord;
 
-                    secondWord = seconds > 1
-                        ? parameters.words.seconds + parameters.words.pluralLetter
-                        : parameters.words.seconds;
+        fullCountDown.minutes.amount.textContent = pad(minutes);
+        fullCountDown.minutes.word.textContent = minuteWord;
 
-                } else {
-                    dayWord = parameters.words.days;
-                    hourWord = parameters.words.hours;
-                    minuteWord = parameters.words.minutes;
-                    secondWord = parameters.words.seconds;
-                }
+        fullCountDown.seconds.amount.textContent = pad(seconds);
+        fullCountDown.seconds.word.textContent = secondWord;
+      };
 
-                /* display an inline countdown into a span tag */
-                if (parameters.inline) {
-                    countdown.innerHTML =
-                        days + ' ' + dayWord + ', ' +
-                        hours + ' ' + hourWord + ', ' +
-                        minutes + ' ' + minuteWord + ', ' +
-                        seconds + ' ' + secondWord + '.';
+      // Start immediately
+      refresh();
+      interval = window.setInterval(refresh, parameters.refresh);
+    });
+  };
 
-                } else {
-                    fullCountDown.days.amount.textContent = (parameters.zeroPad && days.toString().length < 2 ? '0' : '') + days;
-                    fullCountDown.days.word.textContent = dayWord;
-
-                    fullCountDown.hours.amount.textContent = (parameters.zeroPad && hours.toString().length < 2 ? '0' : '') + hours;
-                    fullCountDown.hours.word.textContent = hourWord;
-
-                    fullCountDown.minutes.amount.textContent = (parameters.zeroPad && minutes.toString().length < 2 ? '0' : '') + minutes;
-                    fullCountDown.minutes.word.textContent = minuteWord;
-
-                    fullCountDown.seconds.amount.textContent = (parameters.zeroPad && seconds.toString().length < 2 ? '0' : '') + seconds;
-                    fullCountDown.seconds.word.textContent = secondWord;
-                }
-            };
-
-            // Refresh immediately to prevent a Flash of Unstyled Content
-            refresh();
-            interval = window.setInterval(refresh, parameters.refresh);
-        });
-    };
-
-    exports.simplyCountdown = simplyCountdown;
-}(window));
+  exports.simplyCountdown = simplyCountdown;
+})(window);
 
 /*global $, jQuery, simplyCountdown*/
 if (window.jQuery) {
-    (function ($, simplyCountdown) {
-        'use strict';
-
-        function simplyCountdownify(el, options) {
-            simplyCountdown(el, options);
-        }
-
-        $.fn.simplyCountdown = function (options) {
-            return simplyCountdownify(this.selector, options);
-        };
-    }(jQuery, simplyCountdown));
+  (function ($, simplyCountdown) {
+    "use strict";
+    $.fn.simplyCountdown = function (options) {
+      simplyCountdown(this.selector, options);
+      return this;
+    };
+  })(jQuery, simplyCountdown);
 }
+
+/**
+ * AUTO-INIT:
+ * This makes the countdown run automatically on elements with class ".simply-countdown"
+ * as soon as the DOM is ready, without needing another init file.
+ */
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.simplyCountdown) {
+    window.simplyCountdown(".simply-countdown", {
+      year: 2026,
+      month: 6,
+      day: 19,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      enableUtc: false,
+      zeroPad: true,
+      onEnd: function () {
+        // optional: replace countdown with a message
+        var el = document.querySelector(".simply-countdown");
+        if (el) el.innerHTML = "<h2>Today is the big day! 💍</h2>";
+      },
+    });
+  }
+});
