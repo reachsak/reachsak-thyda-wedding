@@ -285,8 +285,8 @@ document.addEventListener("DOMContentLoaded", function () {
   if (window.simplyCountdown) {
     window.simplyCountdown(".simply-countdown", {
       year: 2026,
-      month: 6,
-      day: 19,
+      month: 5,
+      day: 3,
       hours: 0,
       minutes: 0,
       seconds: 0,
