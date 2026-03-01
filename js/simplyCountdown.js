@@ -1,6 +1,6 @@
 /*!
  * Project : simply-countdown (customized for Reachsak & Thyda)
- * Auto countdown target: 2026-06-19 00:00 (local time)
+ * Auto countdown target: 2026-05-03 00:00 (local time)
  * License : MIT
  */
 
@@ -90,13 +90,14 @@
   simplyCountdown = function (elt, args) {
     var parameters = extend(
       {
-        // defaults (can be overridden by args)
+        // 🎯 TARGET DATE
         year: 2026,
-        month: 6,
-        day: 19,
+        month: 5,
+        day: 3,
         hours: 0,
         minutes: 0,
         seconds: 0,
+
         words: {
           days: "day",
           hours: "hour",
@@ -106,10 +107,7 @@
         },
         plural: true,
         inline: false,
-
-        // IMPORTANT: use local time by default (better for wedding sites)
         enableUtc: false,
-
         onEnd: function () {
           return;
         },
@@ -126,7 +124,7 @@
     var cd = document.querySelectorAll(elt);
     if (!cd || cd.length === 0) return;
 
-    var targetTmpDate = new Date(
+    var targetDate = new Date(
       parameters.year,
       parameters.month - 1,
       parameters.day,
@@ -135,42 +133,13 @@
       parameters.seconds,
     );
 
-    var targetDate;
-    if (parameters.enableUtc) {
-      targetDate = new Date(
-        targetTmpDate.getUTCFullYear(),
-        targetTmpDate.getUTCMonth(),
-        targetTmpDate.getUTCDate(),
-        targetTmpDate.getUTCHours(),
-        targetTmpDate.getUTCMinutes(),
-        targetTmpDate.getUTCSeconds(),
-      );
-    } else {
-      targetDate = targetTmpDate;
-    }
-
     Array.prototype.forEach.call(cd, function (countdown) {
       var fullCountDown = createElements(parameters, countdown);
       var interval;
 
       var refresh = function () {
         var now = new Date();
-        var secondsLeft;
-
-        if (parameters.enableUtc) {
-          // Build a "UTC-like" now date
-          var nowUtc = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(),
-            now.getHours(),
-            now.getMinutes(),
-            now.getSeconds(),
-          );
-          secondsLeft = (targetDate.getTime() - nowUtc.getTime()) / 1000;
-        } else {
-          secondsLeft = (targetDate.getTime() - now.getTime()) / 1000;
-        }
+        var secondsLeft = (targetDate.getTime() - now.getTime()) / 1000;
 
         var days = 0,
           hours = 0,
@@ -191,52 +160,25 @@
           parameters.onEnd();
         }
 
-        var dayWord, hourWord, minuteWord, secondWord;
+        var dayWord =
+          days === 1
+            ? parameters.words.days
+            : parameters.words.days + parameters.words.pluralLetter;
 
-        if (parameters.plural) {
-          dayWord =
-            days === 1
-              ? parameters.words.days
-              : parameters.words.days + parameters.words.pluralLetter;
-          hourWord =
-            hours === 1
-              ? parameters.words.hours
-              : parameters.words.hours + parameters.words.pluralLetter;
-          minuteWord =
-            minutes === 1
-              ? parameters.words.minutes
-              : parameters.words.minutes + parameters.words.pluralLetter;
-          secondWord =
-            seconds === 1
-              ? parameters.words.seconds
-              : parameters.words.seconds + parameters.words.pluralLetter;
-        } else {
-          dayWord = parameters.words.days;
-          hourWord = parameters.words.hours;
-          minuteWord = parameters.words.minutes;
-          secondWord = parameters.words.seconds;
-        }
+        var hourWord =
+          hours === 1
+            ? parameters.words.hours
+            : parameters.words.hours + parameters.words.pluralLetter;
 
-        if (parameters.inline) {
-          countdown.innerHTML =
-            days +
-            " " +
-            dayWord +
-            ", " +
-            hours +
-            " " +
-            hourWord +
-            ", " +
-            minutes +
-            " " +
-            minuteWord +
-            ", " +
-            seconds +
-            " " +
-            secondWord +
-            ".";
-          return;
-        }
+        var minuteWord =
+          minutes === 1
+            ? parameters.words.minutes
+            : parameters.words.minutes + parameters.words.pluralLetter;
+
+        var secondWord =
+          seconds === 1
+            ? parameters.words.seconds
+            : parameters.words.seconds + parameters.words.pluralLetter;
 
         var pad = function (n) {
           var s = String(n);
@@ -256,7 +198,6 @@
         fullCountDown.seconds.word.textContent = secondWord;
       };
 
-      // Start immediately
       refresh();
       interval = window.setInterval(refresh, parameters.refresh);
     });
@@ -265,21 +206,8 @@
   exports.simplyCountdown = simplyCountdown;
 })(window);
 
-/*global $, jQuery, simplyCountdown*/
-if (window.jQuery) {
-  (function ($, simplyCountdown) {
-    "use strict";
-    $.fn.simplyCountdown = function (options) {
-      simplyCountdown(this.selector, options);
-      return this;
-    };
-  })(jQuery, simplyCountdown);
-}
-
 /**
- * AUTO-INIT:
- * This makes the countdown run automatically on elements with class ".simply-countdown"
- * as soon as the DOM is ready, without needing another init file.
+ * AUTO INIT
  */
 document.addEventListener("DOMContentLoaded", function () {
   if (window.simplyCountdown) {
@@ -293,9 +221,10 @@ document.addEventListener("DOMContentLoaded", function () {
       enableUtc: false,
       zeroPad: true,
       onEnd: function () {
-        // optional: replace countdown with a message
         var el = document.querySelector(".simply-countdown");
-        if (el) el.innerHTML = "<h2>Today is the big day! 💍</h2>";
+        if (el) {
+          el.innerHTML = "<h2>Today is the big day! 💍</h2>";
+        }
       },
     });
   }
