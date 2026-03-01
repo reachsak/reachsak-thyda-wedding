@@ -2,7 +2,7 @@ $(document).ready(function () {
   let clock;
 
   // Wedding date
-  let targetDate = moment.tz("2026-06-19 00:00", "Asia/Phnom_Penh");
+  let targetDate = moment.tz("2026-05-03 00:00", "Asia/Phnom_Penh");
 
   // Difference in seconds
   let diff = targetDate.unix() - moment().unix();
