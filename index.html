@@ -88,6 +88,23 @@
       }
     </style>
 
+    <!-- Force hero background to center on all screens -->
+    <style>
+      #fh5co-header {
+        background-position: center center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+      }
+
+      /* Disable parallax shift on mobile */
+      @media (max-width: 768px) {
+        #fh5co-header {
+          background-attachment: scroll !important;
+          background-position: center center !important;
+        }
+      }
+    </style>
+
     <!-- ===== Khmer invitation card styles ===== -->
     <style>
       :root {
@@ -486,7 +503,7 @@
 
         /* Title */
         .inv-section-title {
-          font-size: 1.3rem;
+          font-size: 1.5rem;
           margin-bottom: 18px;
         }
 
@@ -500,18 +517,21 @@
         }
         .inv-parent-group {
           text-align: center !important;
-          font-size: 0.9rem;
+          font-size: 1rem;
         }
 
         /* Divider */
         .inv-divider {
           margin: 12px 0;
         }
+        .inv-divider span {
+          font-size: 0.95rem;
+        }
 
         /* Invite body */
         .inv-body-text {
-          font-size: 0.9rem;
-          line-height: 2;
+          font-size: 1rem;
+          line-height: 2.1;
         }
 
         /* Couple row */
@@ -521,26 +541,26 @@
           margin: 14px 0;
         }
         .inv-monogram {
-          font-size: 2.5rem;
+          font-size: 2.8rem;
           padding: 0;
         }
         .inv-person-label {
-          font-size: 0.82rem;
+          font-size: 0.9rem;
         }
         .inv-person-name {
-          font-size: 1.35rem;
+          font-size: 1.5rem;
         }
 
         /* Details */
         .inv-details-kh {
-          font-size: 0.9rem;
-          line-height: 2;
+          font-size: 1rem;
+          line-height: 2.1;
           margin-bottom: 20px;
         }
 
         /* English section */
         .inv-wedding-of span {
-          font-size: 0.65rem;
+          font-size: 0.72rem;
           letter-spacing: 0.2em;
         }
         .inv-parents-en {
@@ -550,54 +570,54 @@
           margin-bottom: 12px;
         }
         .inv-parent-en {
-          font-size: 0.65rem;
+          font-size: 0.72rem;
           letter-spacing: 0.1em;
           text-align: center !important;
         }
         .inv-request-text {
-          font-size: 0.65rem;
+          font-size: 0.72rem;
           letter-spacing: 0.08em;
           margin-bottom: 16px;
         }
         .inv-name-en {
-          font-size: 2.2rem;
+          font-size: 2.6rem;
         }
         .inv-heart {
-          font-size: 1.4rem;
+          font-size: 1.6rem;
         }
         .inv-which-will {
-          font-size: 0.65rem;
+          font-size: 0.72rem;
           letter-spacing: 0.2em;
         }
         .inv-big-date {
-          font-size: 1.1rem;
+          font-size: 1.2rem;
           letter-spacing: 0.08em;
         }
         .inv-venue-text {
-          font-size: 0.65rem;
+          font-size: 0.72rem;
           letter-spacing: 0.12em;
         }
 
         /* Card 2 schedule */
         .inv-schedule-date {
-          font-size: 1rem;
+          font-size: 1.1rem;
           margin: 14px 0 18px;
         }
         .inv-schedule-list li {
-          font-size: 0.9rem;
-          line-height: 2;
+          font-size: 1rem;
+          line-height: 2.1;
           gap: 8px;
         }
         .inv-schedule-list li .inv-em {
-          font-size: 1rem;
+          font-size: 1.1rem;
         }
 
         /* Blessing */
         .inv-blessing-title {
-          font-size: 1rem;
+          font-size: 1.1rem;
         }
         .inv-blessing-body {
-          font-size: 0.9rem;
+          font-size: 1rem;
           line-height: 2.1;
         }
       }
@@ -719,8 +739,13 @@
         id="fh5co-header"
         class="fh5co-cover"
         role="banner"
-        style="background-image: url(images/bg.jpg)"
-        data-stellar-background-ratio="0.5"
+        style="
+          background-image: url(bg2.jpg);
+          background-position: center center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-attachment: scroll;
+        "
       >
         <div class="overlay"></div>
         <div class="container">
@@ -1500,7 +1525,7 @@
             </svg>
           </div>
 
-          <h2 class="inv-section-title">អំណោយស្នេហា</h2>
+          <h2 class="inv-section-title">ចំណងដៃ</h2>
 
           <div class="inv-divider"><span>Wedding Gift</span></div>
 
@@ -1515,7 +1540,7 @@
               z-index: 2;
             "
           >
-            ប្រសិនបើអ្នកចង់ផ្ញើអំណោយជូន យើងខ្ញុំ<br />
+            ប្រសិនបើលោកអ្នកចង់ផ្ញើចំណងដៃជូន យើងខ្ញុំ<br />
             អាចស្កេន QR Code ខាងក្រោម។<br />
             <span
               style="
