@@ -605,11 +605,11 @@
   </head>
   <body>
     <!-- Background Music -->
-    <audio id="bg-music" src="bgsong.mp3" loop preload="auto"></audio>
+    <audio id="bg-music" src="bgsong.mp3" loop preload="auto" muted></audio>
 
     <!-- Music toggle button -->
     <div id="music-btn" onclick="toggleMusic()" title="Toggle Music">
-      <span id="music-icon">🎵</span>
+      <span id="music-icon">🔇</span>
     </div>
 
     <style>
@@ -621,7 +621,7 @@
         width: 44px;
         height: 44px;
         border-radius: 50%;
-        background: rgba(184, 150, 62, 0.9);
+        background: rgba(120, 120, 120, 0.7);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -633,58 +633,64 @@
       #music-btn:hover {
         transform: scale(1.1);
       }
-      #music-btn.paused {
-        background: rgba(120, 120, 120, 0.7);
+      #music-btn.active {
+        background: rgba(184, 150, 62, 0.9);
+      }
+
+      /* Prompt to tap for sound */
+      #music-prompt {
+        position: fixed;
+        bottom: 132px;
+        right: 10px;
+        z-index: 9999;
+        background: rgba(184, 150, 62, 0.92);
+        color: #fff;
+        font-family: "Work Sans", sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        animation: pulse 1.5s infinite;
+        cursor: pointer;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.6;
+        }
       }
     </style>
+
+    <div id="music-prompt" onclick="toggleMusic()">🎵 Tap for music</div>
 
     <script>
       var music = document.getElementById("bg-music");
       var btn = document.getElementById("music-btn");
       var icon = document.getElementById("music-icon");
-      var playing = false;
+      var prompt = document.getElementById("music-prompt");
+      var muted = true;
 
-      // Try autoplay on first user interaction with the page
-      function tryAutoplay() {
-        music
-          .play()
-          .then(function () {
-            playing = true;
-            icon.textContent = "🎵";
-            btn.classList.remove("paused");
-          })
-          .catch(function () {
-            playing = false;
-          });
-        document.removeEventListener("click", tryAutoplay);
-        document.removeEventListener("touchstart", tryAutoplay);
-        document.removeEventListener("scroll", tryAutoplay);
-      }
-
-      // Try immediately (works if browser allows it)
-      music
-        .play()
-        .then(function () {
-          playing = true;
-        })
-        .catch(function () {
-          // Browser blocked autoplay — wait for first interaction
-          document.addEventListener("click", tryAutoplay);
-          document.addEventListener("touchstart", tryAutoplay);
-          document.addEventListener("scroll", tryAutoplay);
-        });
+      // Start playing muted immediately (browsers allow this)
+      music.play().catch(function () {});
 
       function toggleMusic() {
-        if (playing) {
-          music.pause();
-          playing = false;
-          icon.textContent = "🔇";
-          btn.classList.add("paused");
-        } else {
-          music.play();
-          playing = true;
+        if (muted) {
+          music.muted = false;
+          music.play().catch(function () {});
+          muted = false;
           icon.textContent = "🎵";
-          btn.classList.remove("paused");
+          btn.classList.add("active");
+          // hide the prompt once tapped
+          prompt.style.display = "none";
+        } else {
+          music.muted = true;
+          muted = true;
+          icon.textContent = "🔇";
+          btn.classList.remove("active");
         }
       }
     </script>
@@ -743,9 +749,135 @@
                     <div class="clock clock-fix"></div>
                   </div>
                   <p>
-                    <a href="#fh5co-event" class="btn btn-default btn-sm"
-                      >Save our date</a
+                    <!-- Save to Calendar button -->
+                    <a
+                      href="#"
+                      class="btn btn-default btn-sm"
+                      onclick="
+                        addToCalendar();
+                        return false;
+                      "
+                      >📅 Save the Date</a
                     >
+
+                    <script>
+                      function addToCalendar() {
+                        var title = "Reachsak & Thyda Wedding 💍";
+                        var description =
+                          "You are invited to the wedding of Reachsak & Thyda. Morning ceremony at 7:00 AM and Evening reception at 5:00 PM at The Grand Terrace, Phnom Penh.";
+                        var location =
+                          "The Grand Terrace, Phnom Penh, Cambodia";
+                        var startDate = "20260619";
+                        var startTime = "070000";
+                        var endDate = "20260619";
+                        var endTime = "230000";
+
+                        var isIOS = /iPad|iPhone|iPod/.test(
+                          navigator.userAgent,
+                        );
+                        var isMac =
+                          /Macintosh/.test(navigator.userAgent) &&
+                          !window.MSStream;
+                        var isAndroid = /Android/.test(navigator.userAgent);
+
+                        if (isIOS || isMac) {
+                          // Generate .ics file for iOS/Mac — opens in Apple Calendar
+                          var ics = [
+                            "BEGIN:VCALENDAR",
+                            "VERSION:2.0",
+                            "PRODID:-//Wedding//EN",
+                            "BEGIN:VEVENT",
+                            "DTSTART:" + startDate + "T" + startTime + "Z",
+                            "DTEND:" + endDate + "T" + endTime + "Z",
+                            "SUMMARY:" + title,
+                            "DESCRIPTION:" + description,
+                            "LOCATION:" + location,
+                            "END:VEVENT",
+                            "END:VCALENDAR",
+                          ].join("\r\n");
+
+                          var blob = new Blob([ics], {
+                            type: "text/calendar;charset=utf-8",
+                          });
+                          var url = URL.createObjectURL(blob);
+                          var a = document.createElement("a");
+                          a.href = url;
+                          a.download = "reachsak-thyda-wedding.ics";
+                          a.click();
+                          URL.revokeObjectURL(url);
+                        } else if (isAndroid) {
+                          // Google Calendar intent for Android
+                          var gcalUrl =
+                            "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+                            "&text=" +
+                            encodeURIComponent(title) +
+                            "&dates=" +
+                            startDate +
+                            "T" +
+                            startTime +
+                            "Z/" +
+                            endDate +
+                            "T" +
+                            endTime +
+                            "Z" +
+                            "&details=" +
+                            encodeURIComponent(description) +
+                            "&location=" +
+                            encodeURIComponent(location) +
+                            "&sf=true&output=xml";
+                          window.open(gcalUrl, "_blank");
+                        } else {
+                          // Desktop fallback — show both options
+                          var choice = confirm(
+                            "Add to calendar?\n\nOK = Google Calendar\nCancel = Download .ics (Apple/Outlook)",
+                          );
+                          if (choice) {
+                            var gcalUrl =
+                              "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+                              "&text=" +
+                              encodeURIComponent(title) +
+                              "&dates=" +
+                              startDate +
+                              "T" +
+                              startTime +
+                              "Z/" +
+                              endDate +
+                              "T" +
+                              endTime +
+                              "Z" +
+                              "&details=" +
+                              encodeURIComponent(description) +
+                              "&location=" +
+                              encodeURIComponent(location) +
+                              "&sf=true&output=xml";
+                            window.open(gcalUrl, "_blank");
+                          } else {
+                            var ics = [
+                              "BEGIN:VCALENDAR",
+                              "VERSION:2.0",
+                              "PRODID:-//Wedding//EN",
+                              "BEGIN:VEVENT",
+                              "DTSTART:" + startDate + "T" + startTime + "Z",
+                              "DTEND:" + endDate + "T" + endTime + "Z",
+                              "SUMMARY:" + title,
+                              "DESCRIPTION:" + description,
+                              "LOCATION:" + location,
+                              "END:VEVENT",
+                              "END:VCALENDAR",
+                            ].join("\r\n");
+                            var blob = new Blob([ics], {
+                              type: "text/calendar;charset=utf-8",
+                            });
+                            var url = URL.createObjectURL(blob);
+                            var a = document.createElement("a");
+                            a.href = url;
+                            a.download = "reachsak-thyda-wedding.ics";
+                            a.click();
+                            URL.revokeObjectURL(url);
+                          }
+                        }
+                      }
+                    </script>
                   </p>
                 </div>
               </div>
@@ -1368,7 +1500,7 @@
             </svg>
           </div>
 
-          <h2 class="inv-section-title">ចំណងដៃ</h2>
+          <h2 class="inv-section-title">អំណោយស្នេហា</h2>
 
           <div class="inv-divider"><span>Wedding Gift</span></div>
 
@@ -1383,7 +1515,7 @@
               z-index: 2;
             "
           >
-            ប្រសិនបើលោកអ​្នកចង់ផ្ញើចំណងដៃជូន យើងខ្ញុំ<br />
+            ប្រសិនបើអ្នកចង់ផ្ញើអំណោយជូន យើងខ្ញុំ<br />
             អាចស្កេន QR Code ខាងក្រោម។<br />
             <span
               style="
