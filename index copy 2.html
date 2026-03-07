@@ -80,31 +80,6 @@
       <script src="js/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Moulpali custom font -->
-    <style>
-      @font-face {
-        font-family: "Moulpali";
-        src: url("fonts/Moulpali.ttf") format("truetype");
-      }
-    </style>
-
-    <!-- Force hero background to center on all screens -->
-    <style>
-      #fh5co-header {
-        background-position: center center !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-      }
-
-      /* Disable parallax shift on mobile */
-      @media (max-width: 768px) {
-        #fh5co-header {
-          background-attachment: scroll !important;
-          background-position: center center !important;
-        }
-      }
-    </style>
-
     <!-- ===== Khmer invitation card styles ===== -->
     <style>
       :root {
@@ -204,7 +179,7 @@
       /* Shared text */
       .inv-section-title {
         font-family: "Noto Serif Khmer", serif;
-        font-size: 1.8rem;
+        font-size: 28px;
         font-weight: 600;
         color: var(--stone);
         text-align: center;
@@ -234,7 +209,7 @@
       }
       .inv-divider span {
         font-family: "Noto Serif Khmer", serif;
-        font-size: 0.75rem;
+        font-size: 14px;
         letter-spacing: 0.08em;
         color: var(--sage);
         white-space: nowrap;
@@ -253,13 +228,13 @@
       }
       .inv-person-label {
         font-family: "Noto Serif Khmer", serif;
-        font-size: 0.75rem;
+        font-size: 14px;
         color: var(--sage);
         margin-bottom: 5px;
       }
       .inv-person-name {
         font-family: "Noto Serif Khmer", serif;
-        font-size: 1.45rem;
+        font-size: 24px;
         font-weight: 600;
         color: var(--dark);
         line-height: 1.3;
@@ -285,7 +260,7 @@
       }
       .inv-parent-group {
         font-family: "Noto Serif Khmer", serif;
-        font-size: 0.78rem;
+        font-size: 15px;
         color: var(--stone);
         line-height: 1.9;
       }
@@ -295,7 +270,7 @@
       }
       .inv-body-text {
         font-family: "Noto Serif Khmer", serif;
-        font-size: 0.78rem;
+        font-size: 15px;
         color: var(--stone);
         text-align: center;
         line-height: 2.1;
@@ -309,7 +284,7 @@
       }
       .inv-details-kh {
         font-family: "Noto Serif Khmer", serif;
-        font-size: 0.78rem;
+        font-size: 15px;
         color: var(--stone);
         text-align: center;
         line-height: 2.2;
@@ -487,233 +462,27 @@
         }
       }
 
-      /* ===== MOBILE FIRST — all screens up to 768px ===== */
-      @media (max-width: 768px) {
-        #khmer-invitation {
-          padding: 30px 14px;
-        }
-
-        .inv-page {
-          gap: 20px;
-        }
-
+      @media (max-width: 600px) {
         .inv-card {
-          padding: 36px 20px;
+          padding: 40px 28px;
         }
-
-        /* Title */
         .inv-section-title {
-          font-size: 1.5rem;
-          margin-bottom: 18px;
+          font-size: 1.3rem;
         }
-
-        /* Parents — stack vertically, center aligned */
         .inv-parents {
           flex-direction: column;
-          align-items: center;
-          gap: 6px;
-          text-align: center;
-          margin-bottom: 14px;
-        }
-        .inv-parent-group {
-          text-align: center !important;
-          font-size: 1rem;
-        }
-
-        /* Divider */
-        .inv-divider {
-          margin: 12px 0;
-        }
-        .inv-divider span {
-          font-size: 0.95rem;
-        }
-
-        /* Invite body */
-        .inv-body-text {
-          font-size: 1rem;
-          line-height: 2.1;
-        }
-
-        /* Couple row */
-        .inv-couple-row {
-          flex-direction: column;
           gap: 8px;
-          margin: 14px 0;
-        }
-        .inv-monogram {
-          font-size: 2.8rem;
-          padding: 0;
-        }
-        .inv-person-label {
-          font-size: 0.9rem;
-        }
-        .inv-person-name {
-          font-size: 1.5rem;
-        }
-
-        /* Details */
-        .inv-details-kh {
-          font-size: 1rem;
-          line-height: 2.1;
-          margin-bottom: 20px;
-        }
-
-        /* English section */
-        .inv-wedding-of span {
-          font-size: 0.72rem;
-          letter-spacing: 0.2em;
-        }
-        .inv-parents-en {
-          flex-direction: column;
-          align-items: center;
-          gap: 2px;
-          margin-bottom: 12px;
-        }
-        .inv-parent-en {
-          font-size: 0.72rem;
-          letter-spacing: 0.1em;
-          text-align: center !important;
-        }
-        .inv-request-text {
-          font-size: 0.72rem;
-          letter-spacing: 0.08em;
-          margin-bottom: 16px;
         }
         .inv-name-en {
-          font-size: 2.6rem;
-        }
-        .inv-heart {
-          font-size: 1.6rem;
-        }
-        .inv-which-will {
-          font-size: 0.72rem;
-          letter-spacing: 0.2em;
+          font-size: 2rem;
         }
         .inv-big-date {
-          font-size: 1.2rem;
-          letter-spacing: 0.08em;
-        }
-        .inv-venue-text {
-          font-size: 0.72rem;
-          letter-spacing: 0.12em;
-        }
-
-        /* Card 2 schedule */
-        .inv-schedule-date {
-          font-size: 1.1rem;
-          margin: 14px 0 18px;
-        }
-        .inv-schedule-list li {
           font-size: 1rem;
-          line-height: 2.1;
-          gap: 8px;
-        }
-        .inv-schedule-list li .inv-em {
-          font-size: 1.1rem;
-        }
-
-        /* Blessing */
-        .inv-blessing-title {
-          font-size: 1.1rem;
-        }
-        .inv-blessing-body {
-          font-size: 1rem;
-          line-height: 2.1;
         }
       }
     </style>
   </head>
   <body>
-    <!-- Background Music -->
-    <audio id="bg-music" src="bgsong.mp3" loop preload="auto" muted></audio>
-
-    <!-- Music toggle button -->
-    <div id="music-btn" onclick="toggleMusic()" title="Toggle Music">
-      <span id="music-icon">🔇</span>
-    </div>
-
-    <style>
-      #music-btn {
-        position: fixed;
-        bottom: 80px;
-        right: 20px;
-        z-index: 9999;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: rgba(120, 120, 120, 0.7);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-        font-size: 20px;
-        transition: transform 0.2s;
-      }
-      #music-btn:hover {
-        transform: scale(1.1);
-      }
-      #music-btn.active {
-        background: rgba(184, 150, 62, 0.9);
-      }
-
-      /* Prompt to tap for sound */
-      #music-prompt {
-        position: fixed;
-        bottom: 132px;
-        right: 10px;
-        z-index: 9999;
-        background: rgba(184, 150, 62, 0.92);
-        color: #fff;
-        font-family: "Work Sans", sans-serif;
-        font-size: 11px;
-        letter-spacing: 0.5px;
-        padding: 6px 12px;
-        border-radius: 20px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-        animation: pulse 1.5s infinite;
-        cursor: pointer;
-      }
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.6;
-        }
-      }
-    </style>
-
-    <div id="music-prompt" onclick="toggleMusic()">🎵 Tap for music</div>
-
-    <script>
-      var music = document.getElementById("bg-music");
-      var btn = document.getElementById("music-btn");
-      var icon = document.getElementById("music-icon");
-      var prompt = document.getElementById("music-prompt");
-      var muted = true;
-
-      // Start playing muted immediately (browsers allow this)
-      music.play().catch(function () {});
-
-      function toggleMusic() {
-        if (muted) {
-          music.muted = false;
-          music.play().catch(function () {});
-          muted = false;
-          icon.textContent = "🎵";
-          btn.classList.add("active");
-          // hide the prompt once tapped
-          prompt.style.display = "none";
-        } else {
-          music.muted = true;
-          muted = true;
-          icon.textContent = "🔇";
-          btn.classList.remove("active");
-        }
-      }
-    </script>
     <div class="fh5co-loader"></div>
 
     <div id="page">
@@ -739,13 +508,8 @@
         id="fh5co-header"
         class="fh5co-cover"
         role="banner"
-        style="
-          background-image: url(bg2.jpg);
-          background-position: center center;
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-attachment: scroll;
-        "
+        style="background-image: url(images/bg.jpg)"
+        data-stellar-background-ratio="0.5"
       >
         <div class="overlay"></div>
         <div class="container">
@@ -759,150 +523,18 @@
                   <h1>Reachsak &amp; Thyda</h1>
                   <br />
                   <img src="images/fprint.png" alt="Reachsak + Thyda" />
-                  <h2>6.19.2026</h2>
-                  <p
-                    style="
-                      font-family: &quot;Moulpali&quot;, serif;
-                      font-size: 3.4em;
-                      color: #fff;
-                      line-height: 2;
-                    "
-                  >
-                    ស័ក្តិ & ធីតា
-                  </p>
+                  <h2>29.10.2023</h2>
+                  <h2>
+                    "I have found the one whom my soul loves." <br />Song of
+                    Solomon 3:4
+                  </h2>
                   <div class="flipTimebox">
                     <div class="clock clock-fix"></div>
                   </div>
                   <p>
-                    <!-- Save to Calendar button -->
-                    <a
-                      href="#"
-                      class="btn btn-default btn-sm"
-                      onclick="
-                        addToCalendar();
-                        return false;
-                      "
-                      >📅 Save the Date</a
+                    <a href="#fh5co-event" class="btn btn-default btn-sm"
+                      >Save our date</a
                     >
-
-                    <script>
-                      function addToCalendar() {
-                        var title = "Reachsak & Thyda Wedding 💍";
-                        var description =
-                          "You are invited to the wedding of Reachsak & Thyda. Morning ceremony at 7:00 AM and Evening reception at 5:00 PM at The Grand Terrace, Phnom Penh.";
-                        var location =
-                          "The Grand Terrace, Phnom Penh, Cambodia";
-                        var startDate = "20260619";
-                        var startTime = "070000";
-                        var endDate = "20260619";
-                        var endTime = "230000";
-
-                        var isIOS = /iPad|iPhone|iPod/.test(
-                          navigator.userAgent,
-                        );
-                        var isMac =
-                          /Macintosh/.test(navigator.userAgent) &&
-                          !window.MSStream;
-                        var isAndroid = /Android/.test(navigator.userAgent);
-
-                        if (isIOS || isMac) {
-                          // Generate .ics file for iOS/Mac — opens in Apple Calendar
-                          var ics = [
-                            "BEGIN:VCALENDAR",
-                            "VERSION:2.0",
-                            "PRODID:-//Wedding//EN",
-                            "BEGIN:VEVENT",
-                            "DTSTART:" + startDate + "T" + startTime + "Z",
-                            "DTEND:" + endDate + "T" + endTime + "Z",
-                            "SUMMARY:" + title,
-                            "DESCRIPTION:" + description,
-                            "LOCATION:" + location,
-                            "END:VEVENT",
-                            "END:VCALENDAR",
-                          ].join("\r\n");
-
-                          var blob = new Blob([ics], {
-                            type: "text/calendar;charset=utf-8",
-                          });
-                          var url = URL.createObjectURL(blob);
-                          var a = document.createElement("a");
-                          a.href = url;
-                          a.download = "reachsak-thyda-wedding.ics";
-                          a.click();
-                          URL.revokeObjectURL(url);
-                        } else if (isAndroid) {
-                          // Google Calendar intent for Android
-                          var gcalUrl =
-                            "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-                            "&text=" +
-                            encodeURIComponent(title) +
-                            "&dates=" +
-                            startDate +
-                            "T" +
-                            startTime +
-                            "Z/" +
-                            endDate +
-                            "T" +
-                            endTime +
-                            "Z" +
-                            "&details=" +
-                            encodeURIComponent(description) +
-                            "&location=" +
-                            encodeURIComponent(location) +
-                            "&sf=true&output=xml";
-                          window.open(gcalUrl, "_blank");
-                        } else {
-                          // Desktop fallback — show both options
-                          var choice = confirm(
-                            "Add to calendar?\n\nOK = Google Calendar\nCancel = Download .ics (Apple/Outlook)",
-                          );
-                          if (choice) {
-                            var gcalUrl =
-                              "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-                              "&text=" +
-                              encodeURIComponent(title) +
-                              "&dates=" +
-                              startDate +
-                              "T" +
-                              startTime +
-                              "Z/" +
-                              endDate +
-                              "T" +
-                              endTime +
-                              "Z" +
-                              "&details=" +
-                              encodeURIComponent(description) +
-                              "&location=" +
-                              encodeURIComponent(location) +
-                              "&sf=true&output=xml";
-                            window.open(gcalUrl, "_blank");
-                          } else {
-                            var ics = [
-                              "BEGIN:VCALENDAR",
-                              "VERSION:2.0",
-                              "PRODID:-//Wedding//EN",
-                              "BEGIN:VEVENT",
-                              "DTSTART:" + startDate + "T" + startTime + "Z",
-                              "DTEND:" + endDate + "T" + endTime + "Z",
-                              "SUMMARY:" + title,
-                              "DESCRIPTION:" + description,
-                              "LOCATION:" + location,
-                              "END:VEVENT",
-                              "END:VCALENDAR",
-                            ].join("\r\n");
-                            var blob = new Blob([ics], {
-                              type: "text/calendar;charset=utf-8",
-                            });
-                            var url = URL.createObjectURL(blob);
-                            var a = document.createElement("a");
-                            a.href = url;
-                            a.download = "reachsak-thyda-wedding.ics";
-                            a.click();
-                            URL.revokeObjectURL(url);
-                          }
-                        }
-                      }
-                    </script>
                   </p>
                 </div>
               </div>
@@ -969,57 +601,60 @@
           <div class="row">
             <div class="display-t">
               <div class="display-tc">
-                <div
-                  class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 text-center"
-                >
-                  <div class="row">
-                    <!-- Morning Event -->
-                    <div class="col-md-6 col-sm-6 text-center">
-                      <div class="event-wrap animate-box">
-                        <h3>Morning</h3>
-                        <div class="event-col">
-                          <i class="icon-calendar"></i>
-                          <span>19 June 2026</span>
-                        </div>
-                        <div class="event-col">
-                          <i class="icon-clock"></i>
-                          <span>7:00 AM</span>
-                        </div>
-                        <p>At <b>The Grand Terrace</b></p>
-                        <iframe
-                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2941.683302383594!2d104.89942524892156!3d11.582516990332357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951f78bcb1799%3A0xf48a30b3fde1e6d4!2sThe%20Grand%20Terrace!5e0!3m2!1sen!2sus!4v1772910341615!5m2!1sen!2sus"
-                          width="100%"
-                          height="200"
-                          style="border: 0; display: block; margin: 0 auto"
-                          allowfullscreen=""
-                          loading="lazy"
-                          referrerpolicy="no-referrer-when-downgrade"
-                        ></iframe>
+                <div class="col-md-10 col-md-offset-1">
+                  <div class="col-md-6 col-sm-6 text-center">
+                    <div class="event-wrap animate-box">
+                      <h3>អាពាហ៍ពិពាហ៍</h3>
+                      <div class="event-col">
+                        <i class="icon-calendar"></i>
+                        <span>21 October 2023</span>
                       </div>
+                      <div class="event-col">
+                        <i class="icon-clock"></i>
+                        <span>11:30 AM</span>
+                      </div>
+                      <p>
+                        At
+                        <b>St. Vincent De Paul Church Edathotty, Kannur.</b>
+                        Followed by lunch at
+                        <b>Robin's Wedding Cafe, Edathotty.</b>
+                      </p>
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.673315773661!2d75.71257847590881!3d11.927808088299846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba5cd2b69442ebf%3A0x41b4e77a403a15b4!2sDe%20Paul%20Church%2C%20Edathotty!5e0!3m2!1sen!2sin!4v1696094112600!5m2!1sen!2sin"
+                        width="300"
+                        height="200"
+                        style="border: 0"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                      ></iframe>
                     </div>
-                    <!-- Evening Event -->
-                    <div class="col-md-6 col-sm-6 text-center">
-                      <div class="event-wrap animate-box">
-                        <h3>Evening</h3>
-                        <div class="event-col">
-                          <i class="icon-calendar"></i>
-                          <span>19 June 2026</span>
-                        </div>
-                        <div class="event-col">
-                          <i class="icon-clock"></i>
-                          <span>5:00 PM</span>
-                        </div>
-                        <p>At <b>The Grand Terrace</b></p>
-                        <iframe
-                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2941.683302383594!2d104.89942524892156!3d11.582516990332357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951f78bcb1799%3A0xf48a30b3fde1e6d4!2sThe%20Grand%20Terrace!5e0!3m2!1sen!2sus!4v1772910341615!5m2!1sen!2sus"
-                          width="100%"
-                          height="200"
-                          style="border: 0; display: block; margin: 0 auto"
-                          allowfullscreen=""
-                          loading="lazy"
-                          referrerpolicy="no-referrer-when-downgrade"
-                        ></iframe>
+                  </div>
+                  <div class="col-md-6 col-sm-6 text-center">
+                    <div class="event-wrap animate-box">
+                      <h3>Wedding</h3>
+                      <div class="event-col">
+                        <i class="icon-calendar"></i>
+                        <span>29 October 2023</span>
                       </div>
+                      <div class="event-col">
+                        <i class="icon-clock"></i>
+                        <span>12:00 PM</span>
+                      </div>
+                      <p>
+                        At
+                        <b>St. Antony's Church Cheriyappilly, North Paravur.</b>
+                        Followed by lunch at <b>IMA Hall, North Paravur</b>
+                      </p>
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3927.690238117892!2d76.24293817588756!3d10.124421489987455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0810402ea732f5%3A0x7e23209bf83c2a9b!2sSt.Antony&#39;s%20Roman%20Catholic%20Church!5e0!3m2!1sen!2sin!4v1696094216568!5m2!1sen!2sin"
+                        width="300"
+                        height="200"
+                        style="border: 0"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                      ></iframe>
                     </div>
                   </div>
                 </div>
@@ -1097,34 +732,6 @@
 
     <div class="gototop js-top">
       <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
-    </div>
-
-    <div id="fh5co-gallery" class="fh5co-section-gray">
-      <div class="container">
-        <div class="row">
-          <div
-            class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box"
-          >
-            <h2>Inviation</h2>
-          </div>
-        </div>
-        <div class="row row-bottom-padded-md">
-          <div class="col-md-12 text-center">
-            <img
-              src="images/RS4.png"
-              alt="Invitation"
-              style="
-                max-width: 100%;
-                width: 480px;
-                display: block;
-                margin: 0 auto;
-                border: none;
-                box-shadow: none;
-              "
-            />
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- ============================================================
@@ -1475,228 +1082,10 @@
           </div>
         </div>
         <!-- end card 2 -->
-
-        <!-- CARD 3: GIFT / QR CODE -->
-        <div class="inv-card" style="text-align: center">
-          <div class="inv-corner-tl">
-            <svg
-              viewBox="0 0 140 180"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M20 170 Q40 130 35 80 Q32 50 50 20"
-                stroke="#c9a44a"
-                stroke-width="1.5"
-                fill="none"
-                stroke-linecap="round"
-              />
-              <path
-                d="M35 80 Q55 60 70 70 Q55 85 35 80Z"
-                fill="#c9a44a"
-                opacity="0.5"
-              />
-              <path
-                d="M33 110 Q10 90 15 70 Q30 90 33 110Z"
-                fill="#c9a44a"
-                opacity="0.4"
-              />
-              <path
-                d="M38 55 Q55 35 72 45 Q58 55 38 55Z"
-                fill="#c9a44a"
-                opacity="0.45"
-              />
-              <circle cx="50" cy="20" r="6" fill="#e8d5a0" opacity="0.6" />
-              <circle cx="72" cy="70" r="4" fill="#f0e0a0" opacity="0.7" />
-              <path
-                d="M25 140 Q15 128 20 118 Q28 130 25 140Z"
-                fill="#e0c97a"
-                opacity="0.4"
-              />
-            </svg>
-          </div>
-          <div class="inv-corner-br">
-            <svg
-              viewBox="0 0 140 180"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M20 170 Q40 130 35 80 Q32 50 50 20"
-                stroke="#c9a44a"
-                stroke-width="1.5"
-                fill="none"
-                stroke-linecap="round"
-              />
-              <path
-                d="M35 80 Q55 60 70 70 Q55 85 35 80Z"
-                fill="#c9a44a"
-                opacity="0.5"
-              />
-              <path
-                d="M33 110 Q10 90 15 70 Q30 90 33 110Z"
-                fill="#c9a44a"
-                opacity="0.4"
-              />
-              <path
-                d="M38 55 Q55 35 72 45 Q58 55 38 55Z"
-                fill="#c9a44a"
-                opacity="0.45"
-              />
-              <circle cx="50" cy="20" r="6" fill="#e8d5a0" opacity="0.6" />
-              <circle cx="72" cy="70" r="4" fill="#f0e0a0" opacity="0.7" />
-              <path
-                d="M25 140 Q15 128 20 118 Q28 130 25 140Z"
-                fill="#e0c97a"
-                opacity="0.4"
-              />
-            </svg>
-          </div>
-
-          <h2 class="inv-section-title">ចំណងដៃ</h2>
-
-          <div class="inv-divider"><span>Wedding Gift</span></div>
-
-          <p
-            style="
-              font-family: &quot;Noto Serif Khmer&quot;, serif;
-              font-size: 0.78rem;
-              color: var(--stone);
-              line-height: 2;
-              margin-bottom: 22px;
-              position: relative;
-              z-index: 2;
-            "
-          >
-            ប្រសិនបើលោកអ្នកចង់ផ្ញើចំណងដៃជូន យើងខ្ញុំ<br />
-            អាចស្កេន QR Code ខាងក្រោម។<br />
-            <span
-              style="
-                font-family: &quot;Cinzel&quot;, serif;
-                font-size: 0.6rem;
-                letter-spacing: 0.15em;
-                color: var(--sage);
-              "
-            >
-              SCAN TO SEND YOUR GIFT
-            </span>
-          </p>
-
-          <div
-            style="
-              position: relative;
-              z-index: 2;
-              display: inline-block;
-              padding: 12px;
-              background: #fff;
-              border-radius: 8px;
-              box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            "
-          >
-            <img
-              src="IMG_6773.jpg"
-              alt="KHQR Payment QR Code"
-              style="
-                width: 220px;
-                max-width: 100%;
-                display: block;
-                border-radius: 4px;
-              "
-            />
-          </div>
-
-          <p
-            style="
-              font-family: &quot;Cinzel&quot;, serif;
-              font-size: 0.6rem;
-              letter-spacing: 0.2em;
-              color: var(--stone);
-              margin-top: 18px;
-              position: relative;
-              z-index: 2;
-            "
-          >
-            REACHSAK LY
-          </p>
-        </div>
-        <!-- end card 3 -->
       </div>
       <!-- end .inv-page -->
     </div>
     <!-- end #khmer-invitation -->
-
-    <div id="fh5co-event" class="fh5co-bg">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row">
-          <div
-            class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box"
-          >
-            <h2>Events Location</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="display-t">
-            <div class="display-tc">
-              <div
-                class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 text-center"
-              >
-                <div class="row">
-                  <!-- Morning Event -->
-                  <div class="col-md-6 col-sm-6 text-center">
-                    <div class="event-wrap animate-box">
-                      <h3>Morning</h3>
-                      <div class="event-col">
-                        <i class="icon-calendar"></i>
-                        <span>19 June 2026</span>
-                      </div>
-                      <div class="event-col">
-                        <i class="icon-clock"></i>
-                        <span>7:00 AM</span>
-                      </div>
-                      <p>At <b>The Grand Terrace</b></p>
-                      <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2941.683302383594!2d104.89942524892156!3d11.582516990332357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951f78bcb1799%3A0xf48a30b3fde1e6d4!2sThe%20Grand%20Terrace!5e0!3m2!1sen!2sus!4v1772910341615!5m2!1sen!2sus"
-                        width="100%"
-                        height="200"
-                        style="border: 0; display: block; margin: 0 auto"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                      ></iframe>
-                    </div>
-                  </div>
-                  <!-- Evening Event -->
-                  <div class="col-md-6 col-sm-6 text-center">
-                    <div class="event-wrap animate-box">
-                      <h3>Evening</h3>
-                      <div class="event-col">
-                        <i class="icon-calendar"></i>
-                        <span>19 June 2026</span>
-                      </div>
-                      <div class="event-col">
-                        <i class="icon-clock"></i>
-                        <span>5:00 PM</span>
-                      </div>
-                      <p>At <b>The Grand Terrace</b></p>
-                      <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2941.683302383594!2d104.89942524892156!3d11.582516990332357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951f78bcb1799%3A0xf48a30b3fde1e6d4!2sThe%20Grand%20Terrace!5e0!3m2!1sen!2sus!4v1772910341615!5m2!1sen!2sus"
-                        width="100%"
-                        height="200"
-                        style="border: 0; display: block; margin: 0 auto"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                      ></iframe>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- jQuery -->
     <script src="js/jquery.min.js"></script>
