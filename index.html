@@ -604,6 +604,90 @@
     </style>
   </head>
   <body>
+    <!-- Background Music -->
+    <audio id="bg-music" src="bgsong.mp3" loop preload="auto"></audio>
+
+    <!-- Music toggle button -->
+    <div id="music-btn" onclick="toggleMusic()" title="Toggle Music">
+      <span id="music-icon">🎵</span>
+    </div>
+
+    <style>
+      #music-btn {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        z-index: 9999;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(184, 150, 62, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        font-size: 20px;
+        transition: transform 0.2s;
+      }
+      #music-btn:hover {
+        transform: scale(1.1);
+      }
+      #music-btn.paused {
+        background: rgba(120, 120, 120, 0.7);
+      }
+    </style>
+
+    <script>
+      var music = document.getElementById("bg-music");
+      var btn = document.getElementById("music-btn");
+      var icon = document.getElementById("music-icon");
+      var playing = false;
+
+      // Try autoplay on first user interaction with the page
+      function tryAutoplay() {
+        music
+          .play()
+          .then(function () {
+            playing = true;
+            icon.textContent = "🎵";
+            btn.classList.remove("paused");
+          })
+          .catch(function () {
+            playing = false;
+          });
+        document.removeEventListener("click", tryAutoplay);
+        document.removeEventListener("touchstart", tryAutoplay);
+        document.removeEventListener("scroll", tryAutoplay);
+      }
+
+      // Try immediately (works if browser allows it)
+      music
+        .play()
+        .then(function () {
+          playing = true;
+        })
+        .catch(function () {
+          // Browser blocked autoplay — wait for first interaction
+          document.addEventListener("click", tryAutoplay);
+          document.addEventListener("touchstart", tryAutoplay);
+          document.addEventListener("scroll", tryAutoplay);
+        });
+
+      function toggleMusic() {
+        if (playing) {
+          music.pause();
+          playing = false;
+          icon.textContent = "🔇";
+          btn.classList.add("paused");
+        } else {
+          music.play();
+          playing = true;
+          icon.textContent = "🎵";
+          btn.classList.remove("paused");
+        }
+      }
+    </script>
     <div class="fh5co-loader"></div>
 
     <div id="page">
